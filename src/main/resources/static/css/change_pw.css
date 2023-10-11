@@ -1,0 +1,14 @@
+.login_container {
+    margin : 0 auto;
+    width : 40%;
+}
+
+.title_img {
+    margin-left : 30%;
+    height : 200px;
+}
+
+.title {
+    font-weight : vold;
+    font-size : 30px;
+}

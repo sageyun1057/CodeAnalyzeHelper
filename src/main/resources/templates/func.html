@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/table.css}" rel="stylesheet" />
+<link th:href="@{/css/update_common.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/func.js}"></script>
+
+<th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
+  <th:block th:fragment="content">
+      <div th:each="func, iterStat: ${funcList}">
+          <div>
+                <button type="button" class="collapsible" th:text="${func.name}" th:data-func_id="${func.id}"/>
+                <a th:if="${not #strings.isEmpty(func.thisUrl)}" th:href="${func.thisUrl}"
+                   th:text=${func.thisValue}></a>
+                <input type="text" th:data-func_id="${func.id}" class="this_change"></input>
+                <div th:if="${iterStat.last}">
+                    <input type="hidden" th:value="${func.id}" id="last_hidden">
+                </div>
+          </div>
+          <table class="table">
+              <tbody>
+              <tr class="colored" th:each="local : ${func.localList}">
+                  <td>
+                      <input type="button" value="X" th:data-func_id="${func.id}" th:data-variable_id="${local.id}" class="varDelBtn">
+                  </td>
+                  <td>[[${local.type}]]</td>
+                  <td>[[${local.name}]]</td>
+                  <td>
+                      <a th:if="${not #strings.isEmpty(local.url)}" th:href="${local.url}">[[${local.value}]]</a>
+                      <a th:if="${#strings.isEmpty(local.url)}">[[${local.value}]]</a>
+                  </td>
+                  <td>
+                      <input type="text" class="var_change" th:data-variable_id="${local.id}"/>
+                  </td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+      <div>
+          <label>함수 추가</label>
+          <input type="text" id="funcAdd"></input>
+      </div>
+      <div>
+          <textarea id="varAddArea" cols="100" rows="5"></textarea>
+          <input id="varAddBtn" type="button" value="변수 추가"/>
+      </div>
+  </th:block>
+</th:block>
+</html>

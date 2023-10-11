@@ -1,0 +1,56 @@
+.add_content_wrap {
+    margin : 0 auto;
+    width : 40%;
+}
+
+.collapsible {
+  background-color: #344c7a;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 22px;
+}
+
+.active {
+  background-color: #344c7a;
+}
+
+.collapsible:hover {
+  background-color: #7491c5;
+}
+
+.form-control .input  {
+    width : 40%;
+    float : right;
+}
+
+table.title {
+  width: 100%;
+}
+
+table.upload_list, table.members_table, table.registered_file_table {
+    width: 100%;
+}
+
+
+table {
+  border-collapse: collapse;
+}
+
+table td {
+}
+
+tr.colored:nth-child(even){
+  background-color:#FFFFFF;
+}
+
+tr.colored:nth-child(odd){
+  background-color:#E8E8E8;
+}
+
+.colored {
+}

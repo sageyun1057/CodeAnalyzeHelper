@@ -1,0 +1,47 @@
+.login_icon_img {
+    float: left;
+    margin-top : 1%;
+    height : 60px;
+}
+
+.login_title_label {
+    color : #fd7e14;
+    font-size : 30px;
+    font-weight : bold;
+    margin-top : 1%;
+}
+
+.login_form_container {
+  margin-left: 30%;
+  position: absolute;
+  top: 50%;
+  width : 90%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.login_img {
+    float : left;
+    height : 250px;
+}
+
+.form-login {
+    float : left;
+    margin-left : 5%;
+}
+
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+.btn-login {
+    background-color: #344c7a;
+}
+
+.input_pair {
+    margin-left : 4%;
+}
+
+
+.form-control {
+    width : 80%;
+    float : right;
+}

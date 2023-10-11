@@ -1,0 +1,19 @@
+.download {
+    text-decoration: underline;
+    color : blue;
+    cursor : pointer;
+}
+
+.deleteRegisteredFileBtn {
+    cursor : pointer;
+}
+
+.button_div {
+    width : 67.8%;
+}
+
+.modifyDocBtn, .deleteDocBtn {
+    float : right;
+    margin-left : 5%;
+    margin-bottom : 5%;
+}

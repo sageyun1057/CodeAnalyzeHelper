@@ -1,0 +1,80 @@
+.collapsible {
+  background-color: #344c7a;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 60%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 22px;
+}
+
+.active {
+  background-color: #344c7a;
+}
+
+.collapsible:hover {
+  background-color: #7491c5;
+}
+
+.registerForm {
+  margin-left : 20%;
+}
+
+.label.header {
+    font-size : 20px;
+    float:left;
+    margin-left: 18px;
+    font-weight : bold;
+}
+
+.typeSelect {
+    height: 35px;
+    float : right;
+}
+
+.form-control.oneline.grantNum {
+   height: 35px;
+   width : 25%;
+}
+
+br {
+    clear: both;
+}
+
+.content {
+  padding: 0 18px;
+  overflow: hidden;
+}
+
+.label {
+    font-size : 20px;
+    line-height : 200%;
+}
+
+.form-control.oneline {
+	float : right;
+	width : 30%;
+
+	margin-right : 40%;
+}
+
+form-control.multiline {
+	float : right;
+	width : 30%;
+
+	margin-right : 40%;
+}
+
+
+.hr_bar {
+    width : 60%;
+}
+
+.custom-file {
+	float : right;
+	width : 30%;
+
+	margin-right : 40%;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/table.css}" rel="stylesheet" />
+<link th:href="@{/css/register.css}" rel="stylesheet" />
+<link th:href="@{/css/update_common.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/class.js}"></script>
+
+<head>
+    <title th:if="${info}" th:text="${info.className + '-' + info.instance}"></title>
+</head>
+
+<th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <div th:if="${info}">
+            <button type="button" class="collapsible" th:text="${info.className}"></button>
+            <br>
+            <div th:if="${info.instance == 'template'}">
+                <label style="font-size: 20px;">등록되어 있는 instance.</label>
+                <div th:each="instance: ${instanceList}">
+                    <li>
+                        <a th:href="${info.filePlace + ':' + info.className + '-' + instance}">[[${info.className}]]#[[${instance}]]</a>
+                    </li>
+                </div>
+            </div>
+            <div th:if="${info.instance != 'template'}">
+                <li> <a th:href="${info.filePlace + ':' + info.className + '-' + 'template'}">[[${info.className}]]#template</a></li>
+            </div>
+            <br>
+            <div th:if="${callerList}">
+                <label style="font-size: 20px;">해당 인스턴스를 참조하는 위치</label>
+                <div th:each="caller : ${callerList}">
+                    <li> <a th:href="${caller.path}">[[${caller.variable}]]</a></li>
+                </div>
+            </div>
+
+            <div>
+                <label style="font-size: 20px;">Static</label>
+                <table class="table">
+                    <tbody>
+                    <tr class="colored" th:each="variable : ${info.staticMembers}">
+                        <td>[[${variable.type}]]</td>
+                        <td>[[${variable.name}]]</td>
+                        <td>
+                            <a th:if="${not #strings.isEmpty(variable.url)}" th:href="${variable.url}">[[${variable.value}]]</a>
+                            <a th:if="${#strings.isEmpty(variable.url)}">[[${variable.value}]]</a>
+                        </td>
+                        <td>
+                            <input type="text" class="value_change" th:data-variable_id="${variable.id}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <label style="font-size: 20px;">Member</label>
+            <div>
+                <table class="table">
+                    <tbody>
+                    <tr class="colored" th:each="variable : ${info.members}">
+                        <td>
+                            <input type="button" th:data-variable_id="${variable.id}" th:data-class_id="${info.id}" value="X" class="varDelBtn">
+                        </td>
+                        <td>[[${variable.type}]]</td>
+                        <td>[[${variable.name}]]</td>
+                        <td>
+                            <a th:if="${not #strings.isEmpty(variable.url)}" th:href="${variable.url}">[[${variable.value}]]</a>
+                            <a th:if="${#strings.isEmpty(variable.url)}">[[${variable.value}]]</a>
+                        </td>
+                        <td>
+                            <input type="text" class="value_change" th:data-variable_id="${variable.id}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <textarea id="varAddArea" cols="100" rows="5" th:data-class_id="${info.id}"></textarea>
+                <input id="varAddBtn" type="button" value="변수 추가"/>
+            </div>
+            <form id="delete_class" method="POST" action="/srcs/delete_class">
+                <input type="hidden" name="id" th:value="${info.id}"/>
+                <input type="hidden" name="className" th:value="${info.className}"/>
+                <input type="hidden" name="filePlace" th:value="${info.filePlace}"/>
+                <input type="hidden" name="instance" th:value="${info.instance}"/>
+                <div class="submit_div">
+                    <button type="button" class="btn btn-primary registerBtn" id="classDelBtn" th:data-class_no="${info.id}">
+                        삭제
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div th:unless="${info}">
+            <label style="font-size: 40px;">instance가 아직 추가되지 않았습니다.</label>
+            <div class="submit_div">
+                <button type="button" class="btn btn-primary registerBtn" id="classAddBtn">
+                    추가
+                </button>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+</html>

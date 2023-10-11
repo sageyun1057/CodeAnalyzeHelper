@@ -1,0 +1,15 @@
+.close_btn, .delete_btn{
+    background-color : #F5F5F5;
+    color : red;
+    width : 20px;
+    height : 20px;
+    font-size : 1px;
+    text-align : center;
+    font-weight : bold;
+    border : 0px;
+    float : left;
+}
+
+.delBtn {
+    cursor : pointer;
+}
