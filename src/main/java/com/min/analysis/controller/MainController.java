@@ -6,15 +6,19 @@ import com.min.analysis.service.ClassInfoService;
 import com.min.analysis.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 
@@ -104,6 +108,31 @@ public class MainController {
         }
 
         return ResponseEntity.ok("요청 성공!");
+    }
+
+    @RequestMapping(value = "/plain/*", method = RequestMethod.GET)
+    public String show_plain(HttpServletRequest request, Model model) {
+        String url = request.getRequestURI();
+        String file = url.substring("/plain/".length());
+        StringBuilder content = new StringBuilder();
+        try {
+            FileSystemResource resource = new FileSystemResource(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), "UTF-8"));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append(System.lineSeparator());
+            }
+            reader.close();
+
+        } catch (Exception e) {
+
+        }
+
+        model.addAttribute("title", file);
+        model.addAttribute("plain", content.toString());
+        log.error(content.toString());
+        return "show_plain";
     }
 
     @RequestMapping(value = "/*", method = RequestMethod.GET)
