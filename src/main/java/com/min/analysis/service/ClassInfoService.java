@@ -4,11 +4,12 @@ import com.min.analysis.dto.CallerInfoDto;
 import com.min.analysis.dto.ClassInfoDto;
 import com.min.analysis.dto.ClassVariableDto;
 import com.min.analysis.entity.*;
+import com.min.analysis.parser.JavaParserImpl;
 import com.min.analysis.repository.CallerInfoRepository;
 import com.min.analysis.repository.ClassInfoRepository;
 import com.min.analysis.repository.ClassVariableRepository;
 import com.min.analysis.repository.LocalVariableRepository;
-import com.min.analysis.util.ClassParser;
+import com.min.analysis.parser.ClassParser;
 import com.min.analysis.util.Constants;
 import com.min.analysis.util.Util;
 import lombok.RequiredArgsConstructor;
@@ -37,20 +38,30 @@ public class ClassInfoService {
             return template;
         }
         try {
-            FileReader reader = new FileReader("." + classInfo.getFilePlace());
-            BufferedReader br = new BufferedReader(reader);
-            List<String> content = br.lines().collect(Collectors.toList());
-            Collection<ClassInfo> classInfoList = ClassParser.ParseClass(content, classInfo.getFilePlace());
+            String path = classInfo.getFilePlace();
+            Collection<ClassInfo> classInfoList = null;
+            if(path.endsWith(".java")) {
+                log.error("call javaparser");
+                JavaParserImpl parser = new JavaParserImpl();
+                classInfoList = parser.parse(path);
+            } else if(path.endsWith("txt")) {
+                FileReader reader = new FileReader("." + classInfo.getFilePlace());
+                BufferedReader br = new BufferedReader(reader);
+                List<String> content = br.lines().collect(Collectors.toList());
+                classInfoList = ClassParser.ParseClass(content, classInfo.getFilePlace());
+            }
 
-            classInfoList.stream().forEach( parsedInfo -> {
-                ClassInfo registeredInfo = find(parsedInfo.getFilePlace(), parsedInfo.getClassName(), Constants.TEMPLATE);
-                if(registeredInfo != null) {
-                    log.error(registeredInfo + " is already registered");
-                } else {
-                    repository.save(parsedInfo);
-                }
-            });
-            template = find(classInfo.getFilePlace(), classInfo.getClassName(), Constants.TEMPLATE);
+            if(classInfoList != null) {
+                classInfoList.stream().forEach( parsedInfo -> {
+                    ClassInfo registeredInfo = find(parsedInfo.getFilePlace(), parsedInfo.getClassName(), Constants.TEMPLATE);
+                    if(registeredInfo != null) {
+                        log.error(registeredInfo + " is already registered");
+                    } else {
+                        repository.save(parsedInfo);
+                    }
+                });
+                template = find(classInfo.getFilePlace(), classInfo.getClassName(), Constants.TEMPLATE);
+            }
         } catch (IOException e) {
             log.error("createTemplate failed - " + e);
         }

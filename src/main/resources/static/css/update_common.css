@@ -10,6 +10,16 @@
   font-size: 22px;
 }
 
+.variable_container {
+    align-items: flex-start;
+    max-width: 40%;
+    display: flex;
+
+}
+.variable_textarea {
+    flex: 1;
+}
+
 .active {
   background-color: #344c7a;
 }

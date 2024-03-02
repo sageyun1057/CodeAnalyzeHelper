@@ -16,7 +16,7 @@
 <th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
         <div th:if="${info}">
-            <button type="button" class="collapsible" th:text="${info.className}"></button>
+            <button type="button" class="collapsible" th:text="${info.className + '-' + info.instance}"></button>
             <br>
             <div th:if="${info.instance == 'template'}">
                 <label style="font-size: 20px;">등록되어 있는 instance.</label>
@@ -76,8 +76,9 @@
                     </tbody>
                 </table>
             </div>
-            <div>
-                <textarea id="varAddArea" cols="100" rows="5" th:data-class_id="${info.id}"></textarea>
+            <input type="checkbox" id="static_check"> static </input>
+            <div class="variable_container">
+                <textarea id="varAddArea" class="variable_textarea" cols="100" rows="5" th:data-class_id="${info.id}"></textarea>
                 <input id="varAddBtn" type="button" value="변수 추가"/>
             </div>
             <form id="delete_class" method="POST" action="/srcs/delete_class">

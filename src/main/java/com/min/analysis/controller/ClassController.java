@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -55,6 +56,7 @@ public class ClassController {
             sameClasses.stream().forEach(info -> {
                 instanceList.add(info.getInstance());
             });
+            Collections.sort(instanceList);
             model.addAttribute("instanceList", instanceList);
 
             List<CallerInfoDto> callers = service.getCallers(dto);

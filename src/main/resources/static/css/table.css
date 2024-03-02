@@ -9,6 +9,7 @@ table.upload_list, table.members_table, table.registered_file_table {
 
 table {
   border-collapse: collapse;
+  overflow-x: auto;
 }
 
 table td {

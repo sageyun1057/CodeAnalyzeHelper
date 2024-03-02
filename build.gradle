@@ -39,6 +39,7 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc' // Jdbc, Driver
+	implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.5'
 }
 
 tasks.named('test') {

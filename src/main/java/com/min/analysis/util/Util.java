@@ -101,6 +101,9 @@ public class Util {
     }
 
     public static ClassInfoDto url2ClassInfoDto(String url) {
+        if (!url.contains("/srcs/")) {
+            return null;
+        }
         url = url.substring(url.indexOf("/srcs"));
         String[] tokens = url.split(":");
         if(tokens.length != 2) {

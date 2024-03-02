@@ -1,4 +1,4 @@
-package com.min.analysis.util;
+package com.min.analysis.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.min.analysis.entity.ClassInfo;
 import com.min.analysis.entity.ClassVariable;
+import com.min.analysis.util.Constants;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2

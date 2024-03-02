@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/table.css}" rel="stylesheet" />
+<link th:href="@{/css/register.css}" rel="stylesheet" />
+<link th:href="@{/css/update_common.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/update.js}"></script>
+
+<head>
+    <title th:text="${title}"></title>
+</head>
+
+<th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <div>
+            <input type="checkbox" id="multi_check"> multi </input>
+        </div>
+        <br/>
+        <div>
+            <input type="checkbox" id="static_check"> static </input>
+        </div>
+        <br/>
+        <div>
+            <label style="font-size: 20px;">경로</label>
+            <input type="text" id="targetPath"/>
+            <label style="font-size: 20px;">시작 위치</label>
+            <input type="text" id="start" value="0">
+        </div>
+        <br/>
+        <div>
+            <textarea id="varAddArea" class="variable_textarea" cols="100" rows="5"></textarea>
+        </div>
+        <button type="button" id="varAddBtn"> 입력</button>
+    </th:block>
+</th:block>
+</html>

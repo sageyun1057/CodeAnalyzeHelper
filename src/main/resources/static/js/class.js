@@ -47,6 +47,7 @@ function register_handler() {
     });
 
     $("#varAddBtn").on("click", function(e) {
+        var static_check = $("#static_check").prop('checked');
         var area = $("#varAddArea");
         var content = area.val();
         var tokens = content.split("\n");
@@ -61,12 +62,13 @@ function register_handler() {
                 line = line.substring(0, index).trim();
             }
             if(!(line === "")) {
+                line = line.trim();
                 line = line.replace(/\t/g, " ");
                 var index = line.lastIndexOf(" ");
                 var type = line.substring(0, index);
                 var name = line.substring(index);
                 var varItem = {
-                    isStatic : false,
+                    isStatic : static_check,
                     classId : area.data('class_id'),
                     type : type,
                     name : name,
