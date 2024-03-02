@@ -30,12 +30,24 @@
                 <li> <a th:href="${info.filePlace + ':' + info.className + '-' + 'template'}">[[${info.className}]]#template</a></li>
             </div>
             <br>
+            <div>
+                <button class="btn btn-primary" id="left_class_btn">
+                    <
+                </button>
+                <button class="btn btn-primary" id="right_class_btn">
+                    >
+                </button>
+            </div>
+
+
             <div th:if="${callerList}">
                 <label style="font-size: 20px;">해당 인스턴스를 참조하는 위치</label>
                 <div th:each="caller : ${callerList}">
                     <li> <a th:href="${caller.path}">[[${caller.variable}]]</a></li>
                 </div>
             </div>
+
+
 
             <div>
                 <label style="font-size: 20px;">Static</label>

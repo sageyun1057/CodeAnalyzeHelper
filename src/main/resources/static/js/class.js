@@ -1,4 +1,19 @@
+function move_other_class(page) {
+    var url = window.location.pathname
+    var lastIndex = url.lastIndexOf("-");
+    var prefix = url.substring(0, lastIndex+1)
+    var num_str = url.substring(lastIndex+1)
+    var num = parseInt(num_str) + page
+
+    window.location.href = prefix + num
+}
 function register_handler() {
+    $("#left_class_btn").on("click", function(e) {
+        move_other_class(-1)
+    });
+    $("#right_class_btn").on("click", function(e) {
+        move_other_class(1)
+    });
     $("#classAddBtn").on("click", function(e) {
         $.ajax({
             url: '/srcs/add_class',
