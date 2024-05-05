@@ -24,7 +24,7 @@
                </thead>
                <tbody>
                <tr class="colored" th:each="row, rowStat : ${sheet}" th:if="${rowStat.index != 0}">
-                   <td class="index" th:text="${rowStat.index}"></td>
+                   <td class="index" th:text="${rowStat.index}" th:id="${rowStat.index}"></td>
                    <td th:each="cell, cellStat : ${row}">
                       <a th:if="${not #strings.isEmpty(cell.url)}" th:href="${cell.url}">[[${cell.value}]]</a>
                       <a th:if="${#strings.isEmpty(cell.url)}">[[${cell.value}]]</a>
