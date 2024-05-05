@@ -25,3 +25,49 @@ tr.colored:nth-child(odd){
 
 .colored {
 }
+
+
+.table-container {
+    overflow-x: auto;
+    height: 800px; /* 스크롤 가능한 높이 조절 */
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* 테이블 헤더 고정 */
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background-color: white; /* 헤더를 백그라운드로 설정하여 내용이 흐려지지 않도록 함 */
+    z-index: 1;
+}
+
+/* 테이블 스크롤 영역 내부 설정 */
+.table-container tbody {
+    display: block; /* 블록 요소로 변경하여 헤더와 본문이 독립적으로 스크롤되도록 함 */
+    overflow: auto; /* 스크롤을 활성화하여 내용이 길어지면 스크롤되도록 함 */
+    height: calc(100% - 20px); /* 헤더의 높이만큼 빼고 테이블 내용의 높이 조절 */
+}
+
+/* 테이블 행 설정 */
+.table-container tr {
+    display: table;
+
+    table-layout: fixed; /* 테이블 너비를 고정하여 헤더와 본문이 정렬되도록 함 */
+}
+
+.table-container td, tr, th {
+    border: 1px solid black; /* 각 셀에 선 추가 */
+    padding: 8px; /* 내부 여백 설정 */
+    text-align: left; /* 텍스트 정렬 설정 */
+    min-width: 250px; /* 각 셀의 최대 너비 설정 */
+    overflow: hidden; /* 넘치는 부분을 숨김 */
+    text-overflow: ellipsis; /* 넘치는 부분에 대해 점 세 개 (...)으로 대체 */
+    white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+}
+
+.index {
+    border: 1px solid black; /* 각 셀에 선 추가 */
+    min-width: 50px !important; /* 각 셀의 최대 너비 설정 */
+}

@@ -6,11 +6,11 @@ import com.min.analysis.service.ClassInfoService;
 import com.min.analysis.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,9 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.*;
 
 @Controller
 @Log4j2
@@ -31,11 +36,8 @@ public class MainController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(ClassInfoDto dto, Model model) {
-        log.error("hello main");
         List<String> funcs = funcService.getAllPaths();
-        log.error("funcs : " + funcs);
         List<String> classInfos = classInfoService.getAllInstanciatedClasses();
-        log.error("classInfos : " + classInfos);
 
         Collections.sort(classInfos);
 
@@ -131,8 +133,53 @@ public class MainController {
 
         model.addAttribute("title", file);
         model.addAttribute("plain", content.toString());
-        log.error(content.toString());
         return "show_plain";
+    }
+
+    @RequestMapping(value = "/excel/*", method = RequestMethod.GET)
+    public String show_excel(HttpServletRequest request, Model model) {
+        String url = request.getRequestURI();
+        String file = url.substring("/excel/".length()) + ".xlsx";
+
+        try {
+            ArrayList<ArrayList<ExcelDto>> sheet = readExcelFile(file);
+            model.addAttribute("sheet", sheet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("title", file);
+
+        return "show_excel";
+    }
+
+    public ArrayList<ArrayList<ExcelDto>> readExcelFile(String filePath) throws IOException {
+        FileInputStream excelFile = new FileInputStream(filePath);
+        Workbook workbook = new XSSFWorkbook(excelFile);
+        Sheet sheet = workbook.getSheetAt(0);
+        ArrayList<ArrayList<ExcelDto>> result = new ArrayList<>();
+        for (Row row : sheet) {
+            ArrayList<ExcelDto> rowArray = new ArrayList<>();
+            for (Cell cell : row) {
+                ExcelDto.ExcelDtoBuilder builder = ExcelDto.builder();
+                String content = cell.toString();
+                if (content.startsWith("http")) {
+                    int colonIdx = content.lastIndexOf(":");
+                    int backSlashIdx = content.lastIndexOf("/");
+                    int max = colonIdx > backSlashIdx ? colonIdx : backSlashIdx;
+                    builder.value(content.substring(max + 1));
+                    builder.url(content);
+                } else {
+                    builder.value(content);
+                    builder.url("");
+                }
+                rowArray.add(builder.build());
+            }
+            result.add(rowArray);
+        }
+
+        workbook.close();
+        excelFile.close();
+        return result;
     }
 
     @RequestMapping(value = "/*", method = RequestMethod.GET)

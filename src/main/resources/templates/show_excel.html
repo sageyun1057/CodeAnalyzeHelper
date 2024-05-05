@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/table.css}" rel="stylesheet" />
+<link th:href="@{/css/register.css}" rel="stylesheet" />
+<link th:href="@{/css/update_common.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+
+<head>
+    <title th:text="${title}"></title>
+</head>
+
+<th:block th:replace="~{layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <div th:if="${sheet}" class="table-container">
+           <table class="table">
+               <thead>
+               <tr>
+                   <th class="index">#</th>
+                   <th th:each="header : ${sheet[0]}" th:text="${header.value}"></th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr class="colored" th:each="row, rowStat : ${sheet}" th:if="${rowStat.index != 0}">
+                   <td class="index" th:text="${rowStat.index}"></td>
+                   <td th:each="cell, cellStat : ${row}">
+                      <a th:if="${not #strings.isEmpty(cell.url)}" th:href="${cell.url}">[[${cell.value}]]</a>
+                      <a th:if="${#strings.isEmpty(cell.url)}">[[${cell.value}]]</a>
+                   </td>
+               </tr>
+               </tbody>
+
+            </table>
+        </div>
+    </th:block>
+</th:block>
+</html>

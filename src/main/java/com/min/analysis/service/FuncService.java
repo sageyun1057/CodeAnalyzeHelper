@@ -144,6 +144,11 @@ public class FuncService {
             variable.setUrl(value);
             value = value.substring(value.lastIndexOf(":") + 1);
         }
+        if(value.contains("/plain/") || value.contains("/excel/")) {
+            variable.setUrl(value);
+            value = value.substring(value.lastIndexOf("/") + 1);
+        }
+
         if(value.contains("/func/")) {
             variable.setUrl(value);
             value = "func() - " + value.substring(value.lastIndexOf("/") + 1);

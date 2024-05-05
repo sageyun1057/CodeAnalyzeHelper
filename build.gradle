@@ -40,6 +40,8 @@ dependencies {
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc' // Jdbc, Driver
 	implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.5'
+	implementation 'org.apache.poi:poi:5.2.3'
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
 }
 
 tasks.named('test') {

@@ -199,7 +199,7 @@ public class ClassInfoService {
     }
 
     public boolean deleteUrl(long variableId, boolean classMember, String url) {
-        if(url.contains("/func/")) {
+        if(url.contains("/func/") || url.contains("/plain/") || url.contains("/excel/")) {
             return true;
         }
         ClassInfoDto dto = Util.url2ClassInfoDto(url);
@@ -265,6 +265,11 @@ public class ClassInfoService {
             variable.setUrl(value);
             value = value.substring(value.lastIndexOf(":") + 1);
         }
+        if(value.contains("/plain/") || value.contains("/excel/")) {
+            variable.setUrl(value);
+            value = value.substring(value.lastIndexOf("/") + 1);
+        }
+
         variable.setValue(value);
         return variableRepository.save(variable).getId();
     }
